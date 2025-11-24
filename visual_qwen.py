@@ -58,7 +58,6 @@ if __name__ == '__main__':
         }
     ]
 
-    # TODO: change to your own checkpoint path
     checkpoint_path = "Qwen/Qwen3-VL-2B-Instruct-FP8"
     processor = AutoProcessor.from_pretrained(checkpoint_path)
     inputs = [prepare_inputs_for_vllm(message, processor) for message in [messages]]
