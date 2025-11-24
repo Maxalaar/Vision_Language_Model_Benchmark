@@ -63,18 +63,13 @@ if __name__ == '__main__':
     processor = AutoProcessor.from_pretrained(checkpoint_path)
     inputs = [prepare_inputs_for_vllm(message, processor) for message in [messages]]
 
-    # llm = LLM(
-    #     model=checkpoint_path,
-    #     trust_remote_code=True,
-    #     gpu_memory_utilization=0.9,
-    #     enforce_eager=False,
-    #     tensor_parallel_size=torch.cuda.device_count(),
-    #     seed=0
-    # )
-
     llm = LLM(
-        model="Qwen/Qwen3-VL-2B-Instruct-FP8",
-        device="cpu"
+        model=checkpoint_path,
+        trust_remote_code=True,
+        gpu_memory_utilization=0.9,
+        enforce_eager=False,
+        tensor_parallel_size=torch.cuda.device_count(),
+        seed=0
     )
 
     sampling_params = SamplingParams(
