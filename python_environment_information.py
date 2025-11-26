@@ -1,8 +1,6 @@
-import ray
 import sys
 import os
 import torch
-# import tensorflow
 
 
 def environment_information():
@@ -14,11 +12,9 @@ def environment_information():
         print('You are not in a Conda environment.')
     print()
 
-    # Display Python, Ray, and PyTorch versions
+    # Display Python, PyTorch
     print('Python version:', sys.version)
-    print('Ray version:', ray.__version__)
     print('PyTorch version:', torch.__version__)
-    # print('Tensorflow version:', tensorflow.__version__)
     print()
 
     # Check CUDA availability and display GPU information
@@ -46,23 +42,6 @@ def environment_information():
             gpu_capability = torch.cuda.get_device_capability(gpu_id)
             print(f'GPU Compute Capability: {gpu_capability}')
             print()
-
-    # Initialize Ray and display cluster resources
-    ray_initialization = False
-    if not ray.is_initialized():
-        ray.init()
-        ray_initialization = True
-
-    if ray.is_initialized():
-        resources = ray.cluster_resources()
-        print('Number of CPUs accessible to Ray:', resources.get('CPU', 0))
-        print('Number of GPUs accessible to Ray:', resources.get('GPU', 0))
-    else:
-        print('Ray is not initialized')
-
-    print()
-    if ray_initialization:
-        ray.shutdown()
 
 
 if __name__ == '__main__':
