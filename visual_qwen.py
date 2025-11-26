@@ -3,17 +3,17 @@ from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
 
 if __name__ == '__main__':
     # default: Load the model on the available device(s)
-    # model = Qwen3VLForConditionalGeneration.from_pretrained(
-    #     "Qwen/Qwen3-VL-2B-Instruct", dtype="auto", device_map="auto"
-    # )
+    model = Qwen3VLForConditionalGeneration.from_pretrained(
+        "Qwen/Qwen3-VL-2B-Instruct", dtype="auto", device_map="auto"
+    )
 
     # We recommend enabling flash_attention_2 for better acceleration and memory saving, especially in multi-image and video scenarios.
-    model = Qwen3VLForConditionalGeneration.from_pretrained(
-        "Qwen/Qwen3-VL-2B-Instruct",
-        dtype=torch.bfloat16,
-        attn_implementation="flash_attention_2",
-        device_map="auto",
-    )
+    # model = Qwen3VLForConditionalGeneration.from_pretrained(
+    #     "Qwen/Qwen3-VL-2B-Instruct",
+    #     dtype=torch.bfloat16,
+    #     attn_implementation="flash_attention_2",
+    #     device_map="auto",
+    # )
 
     processor = AutoProcessor.from_pretrained("Qwen/Qwen3-VL-2B-Instruct")
 
