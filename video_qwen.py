@@ -1,11 +1,13 @@
 import torch
 from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
+# from transformers.models.qwen3_vl.modular_qwen3_vl import Qwen3VLProcessor
 
 if __name__ == "__main__":
     # Chargement automatique sur GPU/CPU
     model = Qwen3VLForConditionalGeneration.from_pretrained(
         "Qwen/Qwen3-VL-2B-Instruct",
         dtype="auto",
+        # dtype=torch.float16,
         device_map="auto"
     )
 
@@ -23,7 +25,7 @@ if __name__ == "__main__":
                     "type": "video",
                     "video": video_path,
                 },
-                {"type": "text", "text": "Décris ce qu'il se passe dans cette vidéo."},
+                {"type": "text", "text": "Describe what is happening in this video."},
             ],
         }
     ]
@@ -35,6 +37,9 @@ if __name__ == "__main__":
         add_generation_prompt=True,
         return_tensors="pt",
         return_dict=True,
+        load_audio_from_video=False,
+        num_frames=16,
+        fps=None,
     ).to(model.device)
 
     # Génération de la réponse
@@ -52,5 +57,5 @@ if __name__ == "__main__":
         clean_up_tokenization_spaces=False
     )
 
-    print("\n Réponse du modèle :\n")
+    print("\n Model's response :\n")
     print(output_text[0])
