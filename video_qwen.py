@@ -12,7 +12,7 @@ if __name__ == "__main__":
     processor = AutoProcessor.from_pretrained("Qwen/Qwen3-VL-2B-Instruct")
 
     # Chemin de la vidéo (local ou URL)
-    video_path = "data/video.mp4"
+    video_path = "data/chat_2.mp4"
 
     # Message pour le modèle : "video" au lieu de "image"
     messages = [
@@ -21,7 +21,7 @@ if __name__ == "__main__":
             "content": [
                 {
                     "type": "video",
-                    "video": video_path
+                    "video": video_path,
                 },
                 {"type": "text", "text": "Décris ce qu'il se passe dans cette vidéo."},
             ],
@@ -34,7 +34,7 @@ if __name__ == "__main__":
         tokenize=True,
         add_generation_prompt=True,
         return_tensors="pt",
-        return_dict=True
+        return_dict=True,
     ).to(model.device)
 
     # Génération de la réponse
