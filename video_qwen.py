@@ -1,6 +1,6 @@
 import torch
-from transformers import Qwen3VLForConditionalGeneration, AutoProcessor
-# from transformers.models.qwen3_vl.modular_qwen3_vl import Qwen3VLProcessor
+from transformers import Qwen3VLForConditionalGeneration, AutoProcessor, Qwen3VLVideoProcessor
+from transformers.models.qwen3_vl.modular_qwen3_vl import Qwen3VLProcessor
 
 if __name__ == "__main__":
     # Chargement automatique sur GPU/CPU
@@ -11,10 +11,15 @@ if __name__ == "__main__":
         device_map="auto"
     )
 
-    processor = AutoProcessor.from_pretrained("Qwen/Qwen3-VL-2B-Instruct")
+    processor: Qwen3VLProcessor = AutoProcessor.from_pretrained("Qwen/Qwen3-VL-2B-Instruct")
+    video_processor: Qwen3VLVideoProcessor = processor.video_processor
+    # video_processor.size = {
+    #     "longest_edge": 256 * 32 * 32,
+    #     "shortest_edge": 256 * 32 * 32,
+    # }
 
     # Chemin de la vidéo (local ou URL)
-    video_path = "data/chat_2.mp4"
+    video_path = "data/chat_1.mp4"
 
     # Message pour le modèle : "video" au lieu de "image"
     messages = [
