@@ -14,8 +14,24 @@ if __name__ == "__main__":
     video_processor: Qwen3VLVideoProcessor = processor.video_processor
 
     # Deux vidéos
-    video1 = "data/chat_1.mp4"
-    video2 = "data/chat_2.mp4"
+    # video1 = "data/chat_1.mp4"
+    # video2 = "data/chat_2.mp4"
+    # Please describe Video 1 in a way that clearly distinguishes it from Video 2.
+
+    game_description: str = "Surround is a two-player game where each player controls a vehicle that leaves a solid trail behind it. The goal is to force the opponent to collide with trail or the edges of the screen. The last remaining player wins the round."
+    # instruction: str = "Here is a description of game: " + game_description + ". The two videos show different phases of same the game, please describe videos, clearly highlighting the differences between them."
+    # instruction: str = "The two videos show different phases of the game. Compare these two videos and describe what happens in each one."
+    # instruction: str = "The two videos show different phases of same the game. Compare these two phases and describe what happens in each one."
+    instruction: str = (
+        "Game description: " + game_description +
+        "You are given two videos showing different phases of the same game. "
+        "For each video, provide a short, clear description and briefly mention how it differs from the other. "
+        "Use the following format: 'Video 1: ...' and 'Video 2: ...'."
+    )
+
+    video1 = "data/video_1.mp4"
+    video2 = "data/video_2.mp4"
+
 
     # Messages avec deux vidéos
     messages = [
@@ -26,7 +42,8 @@ if __name__ == "__main__":
                 { "type": "video", "video": video2 },
                 {
                     "type": "text",
-                    "text": "Compare these two videos and describe what happens in each one."
+                    # "text": "Compare these two videos and describe what happens in each one."
+                    "text": instruction,
                 }
             ],
         }
@@ -45,7 +62,7 @@ if __name__ == "__main__":
     ).to(model.device)
 
     # Génération
-    generated_ids = model.generate(**inputs, max_new_tokens=256)
+    generated_ids = model.generate(**inputs, max_new_tokens=512)
 
     generated_trimmed = [
         out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs["input_ids"], generated_ids)
