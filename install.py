@@ -11,6 +11,7 @@ if __name__ == '__main__':
         'pip install qwen-vl-utils==0.0.14',
         'pip install torch-c-dlpack-ext',
         'pip install torchcodec',
+        'pip install qwen-omni-utils',
     ]
 
     # Execute conda commands
